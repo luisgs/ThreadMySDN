@@ -75,9 +75,10 @@ def startNetwork():
     info('** Creating Overlay network topology\n')
     topo = FVTopo()
     global net
-    net = Mininet(topo=topo, link = TCLink,
-                  controller=lambda name: RemoteController(name, ip='127.0.0.1'),
-                  listenPort=6633) #, autoSetMacs=True)
+    net = Mininet(topo=topo, link = TCLink)
+
+    net.addController('c0', controller=RemoteController, ip='127.0.0.1',
+                        listenPort=6633) #, autoSetMacs=True)
 
     info('** Starting the network\n')
 
