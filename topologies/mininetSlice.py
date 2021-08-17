@@ -80,6 +80,19 @@ def startNetwork():
                   listenPort=6633) #, autoSetMacs=True)
 
     info('** Starting the network\n')
+
+    # DISABLING IPv6
+    for h in net.hosts:
+        print "disable ipv6"
+        h.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
+        h.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
+        h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
+
+    for s in net.switches:
+        print "disable ipv6"
+        sw.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
+        sw.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
+        sw.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
     net.start()
 
     info('** Running CLI\n')
