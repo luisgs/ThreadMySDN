@@ -42,23 +42,21 @@ class FVTopo(Topo):
         for i in range(3):
             self.addHost('h%d' % (i+1), mac='0:0:0:0:0:%d'%(i+1),ip='10.0.0.%d'%(i+1), **hconfig)
 
-        # I add a particular host with a particular MAC and IP addresses
+        # Attacker host will have a very clear MAC and IP.
         self.addHost('h4', mac='0:0:0:0:0:B', ip='10.0.0.25', **hconfig)
         # Add switch links
         # Specified to the port numbers to avoid any port number consistency issue
 
+        # Switch interconnection
         self.addLink('s2', 's1', port1=1, port2=1, **switch_link_config)
-        self.addLink('s3', 's1', port1=1, port2=2, **switch_link_config)
-        self.addLink('h1', 's1', port1=1, port2=3, **host_link_config)
-        self.addLink('h2', 's1', port1=1, port2=4, **host_link_config)
 
-        self.addLink('s2', 's4', port1=2, port2=1, **switch_link_config)
-        self.addLink('s3', 's4', port1=2, port2=2, **switch_link_config)
-        self.addLink('h3', 's4', port1=1, port2=3, **host_link_config)
-        self.addLink('h4', 's4', port1=1, port2=4, **host_link_config)
+        # hosts to switch connections
+        self.addLink('h1', 's1', port1=1, port2=2, **host_link_config)
+        self.addLink('h2', 's1', port1=1, port2=3, **host_link_config)
+        self.addLink('h3', 's2', port1=1, port2=2, **host_link_config)
 
         # Add link to my malicious host
-        self.addLink('s2', 'h5', port1=3, port2=1, **http_link_config)
+        self.addLink('s2', 'h4', port1=2, port2=1, **host_link_config)
 
         info( '\n*** printing and validating the ports running on each interface\n' )
 
