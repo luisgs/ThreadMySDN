@@ -27,7 +27,7 @@ class FVTopo(Topo):
         Topo.__init__(self)
 
         # Create template host, switch, and link
-        hconfig = {'inNamespace':True}
+        hconfig = {'inNamespace':False}
         switch_link_config = {'bw': 50}
 	    # Therefore, maximum badnwith speed should be 10mbps
         host_link_config = {'bw':10}
@@ -70,7 +70,7 @@ def startNetwork():
     global net
     net = Mininet(topo=topo, link = TCLink,
                   controller=lambda name: RemoteController(name, ip='127.0.0.1'),
-                  listenPort=6633, autoSetMacs=False)
+                  listenPort=6633) #, autoSetMacs=True)
 
     info('** Starting the network\n')
     net.start()
