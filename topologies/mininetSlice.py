@@ -53,10 +53,10 @@ class FVTopo(Topo):
         # hosts to switch connections
         self.addLink('h1', 's1', port1=1, port2=2, **host_link_config)
         self.addLink('h2', 's1', port1=1, port2=3, **host_link_config)
-        self.addLink('h3', 's2', port1=1, port2=2, **host_link_config)
+        self.addLink('h3', 's2', port1=2, port2=2, **host_link_config)
 
         # Add link to my malicious host
-        self.addLink('s2', 'h4', port1=2, port2=1, **host_link_config)
+        self.addLink('s2', 'h4', port1=3, port2=1, **host_link_config)
 
         info( '\n*** printing and validating the ports running on each interface\n' )
 
