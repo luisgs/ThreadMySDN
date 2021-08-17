@@ -34,16 +34,23 @@ class FVTopo(Topo):
 
         # Create switch nodes
         for i in range(2):
-            sconfig = {'dpid': "%016x" % (i+1)}
+            sconfig = {'dpid': '%016x' % (i+1)}
             self.addSwitch('s%d' % (i+1), **sconfig)
 
         # Create host nodes
         # I have control about the MAC addresses so they are not assigned as default.
-        for i in range(3):
-            self.addHost('h%d' % (i+1), mac='00:00:00:00:00:0%d'%(i+1),ip='10.0.0.%d'%(i+1), **hconfig)
+
+        #for i in range(3):
+        #    self.addHost('h%d' % (i+1), mac='00:00:00:00:00:0%d'%(i+1),ip='10.0.0.%d'%(i+1), **hconfig)
+
+        self.addHost('h1', mac='00:00:00:00:00:01',ip='10.0.0.1/24')
+        self.addHost('h2', mac='00:00:00:00:00:02',ip='10.0.0.2/24')
+        self.addHost('h3', mac='00:00:00:00:00:03',ip='10.0.0.3/24')
 
         # Attacker host will have a very clear MAC and IP.
-        self.addHost('h4', mac='00:00:00:00:00:0B', ip='10.0.0.25', **hconfig)
+        #self.addHost('h4', mac='00:00:00:00:00:0B', ip='10.0.0.25', **hconfig)
+        self.addHost('h4', mac='00:00:00:00:00:0B', ip='10.0.0.25/24')
+
         # Add switch links
         # Specified to the port numbers to avoid any port number consistency issue
 
@@ -58,7 +65,7 @@ class FVTopo(Topo):
             # h3 will try to contact h1
 
         # Add link to my malicious host
-        self.addLink('s2', 'h4', port1=3, port2=1, **host_link_config)
+        self.addLink('h4', 's2', port1=1, port2=3, **host_link_config)
 
         info( '\n*** printing and validating the ports running on each interface\n' )
 
