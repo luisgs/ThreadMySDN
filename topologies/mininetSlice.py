@@ -40,10 +40,10 @@ class FVTopo(Topo):
         # Create host nodes
         # I have control about the MAC addresses so they are not assigned as default.
         for i in range(3):
-            self.addHost('h%d' % (i+1), mac='0:0:0:0:0:%d'%(i+1),ip='10.0.0.%d'%(i+1), **hconfig)
+            self.addHost('h%d' % (i+1), mac='00:00:00:00:00:0%d'%(i+1),ip='10.0.0.%d'%(i+1), **hconfig)
 
         # Attacker host will have a very clear MAC and IP.
-        self.addHost('h4', mac='0:0:0:0:0:B', ip='10.0.0.25', **hconfig)
+        self.addHost('h4', mac='00:00:00:00:00:0B', ip='10.0.0.25', **hconfig)
         # Add switch links
         # Specified to the port numbers to avoid any port number consistency issue
 
