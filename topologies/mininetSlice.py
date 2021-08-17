@@ -88,7 +88,7 @@ def startNetwork():
         h.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
         h.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
 
-    for s in net.switches:
+    for sw in net.switches:
         print "disable ipv6"
         sw.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
         sw.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
