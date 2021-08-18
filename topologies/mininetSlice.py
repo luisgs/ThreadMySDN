@@ -75,10 +75,18 @@ def startNetwork():
     info('** Creating Overlay network topology\n')
     topo = FVTopo()
     global net
-    net = Mininet(topo=topo, link = TCLink)
 
-    net.addController('c0', controller=RemoteController, ip='127.0.0.1',
-                        listenPort=6633) #, autoSetMacs=True)
+    net = Mininet(topo=topo, 
+                    link = TCLink, 
+                    build = False,
+                    ipBase='10.0.0.0/8')
+
+    # Remoto Controller
+    c0 = net.addController(name='c0' ,
+                            controller=RemoteController ,
+                            ip='127.0.0.1',
+                            protocol = 'tcp',
+                            port=6633)
 
     info('** Starting the network\n')
 
@@ -94,7 +102,10 @@ def startNetwork():
         sw.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
         sw.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
         sw.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
+
+    net.build()
     net.start()
+    net.get('s1').start([c0])
 
     info('** Running CLI\n')
     CLI(net)
