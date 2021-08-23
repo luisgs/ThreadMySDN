@@ -27,7 +27,7 @@ class FVTopo(Topo):
         Topo.__init__(self)
 
         # Create template host, switch, and link
-        hconfig = {'inNamespace':False}
+        hconfig = {'inNamespace':True}
         switch_link_config = {'bw': 50}
 	    # Therefore, maximum badnwith speed should be 10mbps
         host_link_config = {'bw':10}
@@ -43,13 +43,13 @@ class FVTopo(Topo):
         #for i in range(3):
         #    self.addHost('h%d' % (i+1), mac='00:00:00:00:00:0%d'%(i+1),ip='10.0.0.%d'%(i+1), **hconfig)
 
-        self.addHost('h1', mac='00:00:00:00:00:01',ip='10.0.0.1/24')
-        self.addHost('h2', mac='00:00:00:00:00:02',ip='10.0.0.2/24')
-        self.addHost('h3', mac='00:00:00:00:00:03',ip='10.0.0.3/24')
+        self.addHost('h1', mac='00:00:00:00:00:01',ip='10.0.0.1/24', **hconfig)
+        self.addHost('h2', mac='00:00:00:00:00:02',ip='10.0.0.2/24', **hconfig)
+        self.addHost('h3', mac='00:00:00:00:00:03',ip='10.0.0.3/24', **hconfig)
 
         # Attacker host will have a very clear MAC and IP.
         #self.addHost('h4', mac='00:00:00:00:00:0B', ip='10.0.0.25', **hconfig)
-        self.addHost('h4', mac='00:00:00:00:00:0B', ip='10.0.0.25/24')
+        self.addHost('h4', mac='00:00:00:00:00:04', ip='10.0.0.4/24', **hconfig)
 
         # Add switch links
         # Specified to the port numbers to avoid any port number consistency issue
@@ -102,6 +102,7 @@ def startNetwork():
         sw.cmd("sysctl -w net.ipv6.conf.all.disable_ipv6=1")
         sw.cmd("sysctl -w net.ipv6.conf.default.disable_ipv6=1")
         sw.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
+#        sw.cmd("sysctl -w net.ipv4.ip_forward=1")
 
     net.build()
     net.start()
