@@ -90,6 +90,12 @@ def startNetwork():
 
     info('** Starting the network\n')
 
+
+
+    net.build()
+    net.start()
+    net.get('s1').start([c0])
+
     # DISABLING IPv6
     for h in net.hosts:
         print "disable ipv6"
@@ -104,9 +110,8 @@ def startNetwork():
         sw.cmd("sysctl -w net.ipv6.conf.lo.disable_ipv6=1")
 #        sw.cmd("sysctl -w net.ipv4.ip_forward=1")
 
-    net.build()
-    net.start()
-    net.get('s1').start([c0])
+    # ENABLING ipv4 forwarding for H4
+    net['h4'].cmd("sysctl -w net.ipv4.ip_forward=1")
 
     info('** Running CLI\n')
     CLI(net)
